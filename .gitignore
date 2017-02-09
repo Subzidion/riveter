@@ -1,0 +1,5 @@
+# Symlinks and directories of symlinks:
+librosie.c
+librosie.a
+include/*
+libs/*
