@@ -6,7 +6,7 @@ RUN apt-get install --yes gcc
 RUN apt-get install --yes libreadline6-dev
 RUN apt-get install --yes git
 
-RUN git clone --recursive https://github.com/Subzidion/rosie-pattern-language.git /opt/rosie
+RUN git clone --recursive https://github.com/jamiejennings/rosie-pattern-language.git /opt/rosie
 
 RUN cd /opt/rosie && make clean && make linux
 
@@ -24,6 +24,6 @@ RUN ln -fs $ROSIE_LIB/librosie_gen.c $GOPATH/src/riveter/include/librosie_gen.c
 RUN ln -fs $ROSIE_LIB/librosie.a $GOPATH/src/riveter/librosie.a
 
 RUN go build riveter
-ENTRYPOINT echo "Running Server..." && ./riveter
+ENTRYPOINT ./riveter
 
 EXPOSE 5000

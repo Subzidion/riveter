@@ -1,12 +1,4 @@
-//  -*- Mode: Go; -*-                                              
-// 
-//  rtest.go    Sample driver for librosie in go
-// 
-//  © Copyright IBM Corporation 2016, 2017.
-//  LICENSE: MIT License (https://opensource.org/licenses/mit-license.html)
-//  AUTHOR: Jamie A. Jennings
-
-
+// main web server, serving files and running rosie code
 package main
 
 // #cgo LDFLAGS: ${SRCDIR}/librosie.a -lm -ldl
@@ -37,6 +29,7 @@ import (
     "os"
     "strconv"
     "net/http"
+    "log"
 )
 
 func structString_to_GoString(cstr C.struct_rosieL_string) string {
@@ -56,30 +49,24 @@ func print_structStringArray(cstr_array C.struct_rosieL_stringArray) {
 }
 
 func main() {
+	rosie_home := os.Getenv("ROSIE_HOME")
+	if rosie_home == "" {
+		log.Fatal("Environment variable ROSIE_HOME is not set.  Must be set to root of rosie directory.\n")
+	}
     http.HandleFunc("/", handler)
-    http.ListenAndServe(":5000", nil)
+    log.Fatal(http.ListenAndServe(":5000", nil))
 }
 
 func handler(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Initializing Rosie... ")
-
 	var messages C.struct_rosieL_stringArray
-
-	rosie_home := os.Getenv("ROSIE_HOME")
-	if rosie_home=="" {
-		fmt.Fprintf(w, "\nEnvironment variable ROSIE_HOME is not set.  Must be set to root of rosie directory.\n")
-		os.Exit(-1)
-	}
-
-	home := gostring_to_structStringptr(rosie_home)
+	home := gostring_to_structStringptr(os.Getenv("ROSIE_HOME"))
 	engine, err := C.rosieL_initialize(home, &messages)
-	fmt.Fprintf(w, "done.\n")
 	if engine==nil {
 		fmt.Fprintf(w, "Return value from initialize was NULL!")
 		fmt.Fprintf(w, "Err field returned by initialize was: %s\n", err)
 		fmt.Fprintf(w, "Messages returned from initialize:\n")
 		print_structStringArray(messages)
-		os.Exit(-1)
+        return
 	}
 
 	var a C.struct_rosieL_stringArray
@@ -94,21 +81,12 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Config from inspect_engine: %s\n", structString_to_GoString(*C.string_array_ref(a,1)))
 	C.rosieL_free_stringArray(a)
 
-	var foo string = "1111111111222222222211111111112222222222111111111122222222221111111111222222222211111111112222222222"
-	foo_string := C.new_string_ptr(C.int(len(foo)), C.CString(foo))
-
-	a, err = C.rosieL_match(engine, foo_string, nil)
-	retval = structString_to_GoString(*C.string_array_ref(a,0))
-	fmt.Fprintf(w, "Return code from match: %s\n", retval)
-	fmt.Fprintf(w, "Data|false from match: %s\n", structString_to_GoString(*C.string_array_ref(a,1)))
-	fmt.Fprintf(w, "Leftover chars from match: %s\n", structString_to_GoString(*C.string_array_ref(a,2)))
-
 	var r C.struct_rosieL_stringArray
 	var code, js_str string
 	var leftover int
 
-	foo = "1239999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
-	foo_string = C.new_string_ptr(C.int(len(foo)), C.CString(foo))
+	var foo string = "1239999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+    foo_string := C.new_string_ptr(C.int(len(foo)), C.CString(foo))
 
 	r = C.rosieL_match(engine, foo_string, nil)
 	code = structString_to_GoString(*C.string_array_ref(r,0))
@@ -136,8 +114,5 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 	C.rosieL_free_stringArray(r)
-
-	fmt.Fprintf(w, " done.\n");
-
 	C.rosieL_finalize(engine);
 }
