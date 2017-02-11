@@ -54,7 +54,7 @@ func main() {
 	}
 
     r := gin.Default()
-    r.LoadHTMLGlob("templates/*.html")
+    r.LoadHTMLGlob("src/riveter/templates/*.html")
     r.GET("/", func(c *gin.Context) {
         c.HTML(http.StatusOK, "index.html", nil)
     })
@@ -66,7 +66,7 @@ func main() {
             process.POST("/", processPattern)
         }
     }
-    r.Run(":8000")
+    r.Run(":5000")
 }
 
 func processPattern(c *gin.Context) {
