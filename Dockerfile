@@ -15,6 +15,8 @@ RUN cd /opt/rosie/ffi/librosie/ && make
 ENV ROSIE_HOME /opt/rosie
 ENV ROSIE_LIB /opt/rosie/ffi/librosie
 
+RUN go get github.com/gin-gonic/gin
+
 RUN git clone https://github.com/Subzidion/riveter.git $GOPATH/src/riveter/
 
 RUN mkdir -p $GOPATH/src/riveter/include
