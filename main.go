@@ -66,7 +66,7 @@ func main() {
             process.POST("/", processPattern)
         }
     }
-    r.Run(":5000")
+    r.Run(":8000")
 }
 
 func processPattern(c *gin.Context) {
@@ -85,7 +85,18 @@ func processPattern(c *gin.Context) {
             return
         }
 
-        config := gostring_to_structStringptr("{\"expression\":\"[:digit:]+\", \"encode\":\"json\"}")
+        manifest := gostring_to_structStringptr(os.Getenv("ROSIE_HOME") + "/MANIFEST")
+        res, err := C.rosieL_load_manifest(engine, manifest)
+        log.Print("Load Manifest return: " + structString_to_GoString(*C.string_array_ref(res, 0)))
+        if err != nil {
+            c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
+            C.rosieL_free_stringArray(rosie_string)
+            C.rosieL_free_stringArray(messages)
+            C.rosieL_finalize(engine);
+            return
+        }
+
+        config := gostring_to_structStringptr("{\"expression\":\"" + req.Pattern + "\", \"encode\":\"json\"}")
         rosie_string, err = C.rosieL_configure_engine(engine, config)
         if err != nil {
             c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
@@ -149,7 +160,7 @@ func processPattern(c *gin.Context) {
                 "leftover": leftover,
                 "retvals": retvals,
                 "text": retvals["*"]["text"],
-                "pos": int(retvals["*"]["pos"].(float64)),
+                //"pos": int(retvals["*"]["pos"].(float64)),
                 "subs": subs,
             })
         }
