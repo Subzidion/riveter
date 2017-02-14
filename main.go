@@ -66,7 +66,7 @@ func main() {
             process.POST("/", processPattern)
         }
     }
-    r.Run(":8000")
+    r.Run(":5000")
 }
 
 func processPattern(c *gin.Context) {
