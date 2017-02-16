@@ -54,7 +54,8 @@ func main() {
 	}
 
     r := gin.Default()
-    r.LoadHTMLGlob("src/riveter/templates/*.html")
+    r.Static("/static", "src/riveter/client/build/static")
+    r.LoadHTMLFiles("src/riveter/client/build/index.html")
     r.GET("/", func(c *gin.Context) {
         c.HTML(http.StatusOK, "index.html", nil)
     })

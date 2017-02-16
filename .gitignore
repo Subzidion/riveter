@@ -3,3 +3,7 @@ librosie.c
 librosie.a
 include/*
 libs/*
+
+# JS files
+client/node_modules/
+client/build/
