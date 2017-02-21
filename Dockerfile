@@ -1,8 +1,6 @@
 FROM golang:1.6
 
 RUN apt-get update
-RUN apt-get install --yes make
-RUN apt-get install --yes gcc
 RUN apt-get install --yes libreadline6-dev
 RUN apt-get install --yes git
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash
