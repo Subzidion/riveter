@@ -35,7 +35,7 @@ import (
 
 type RosieRequest struct {
     Pattern string `form:"pattern" json:"pattern" binding:"required"`
-    Text    string `form:"text-content" json:"text" binding:"required"`
+    Text    string `form:"textContent" json:"textContent" binding:"required"`
 }
 
 func structString_to_GoString(cstr C.struct_rosieL_string) string {
