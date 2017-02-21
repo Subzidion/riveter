@@ -7,9 +7,10 @@ class PatternItem extends Component {
 
   render() {
     return (
-      <li className="Pattern">
-        <strong>{this.props.pattern.pattern}</strong> <a href="#" onClick={this.deletePattern.bind(this, this.props.pattern.pattern)}>X</a>
-      </li>
+      <div>
+      <label><input className="Pattern" type="checkbox" value={this.props.pattern.pattern} />
+        <strong>{this.props.pattern.pattern}</strong></label> <a href="#" onClick={this.deletePattern.bind(this, this.props.pattern.pattern)}>X</a>
+      </div>
     );
   }
 }
