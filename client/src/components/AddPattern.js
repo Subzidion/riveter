@@ -25,6 +25,7 @@ class AddPattern extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
+      <br />
         <div>
           <label>Pattern: </label>
           <input type="text" ref="pattern" />
