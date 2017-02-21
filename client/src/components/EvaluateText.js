@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
+import Patterns from './Patterns';
+
 class EvaluateText extends Component {
   constructor() {
     super();
     this.state = {
-      newPattern: {}
+      selectedPattern: 'basic.matchall'
     }
+  }
+
+  deletePattern(pattern) {
+    this.props.onDelete(pattern);
+  }
+
+  changePattern(pattern) {
+    this.setState({
+      selectedPattern: pattern
+    }, function() {
+      console.log(pattern);
+    });
   }
 
   handleSubmit(e) {
     var data = {
-      pattern: 'basic.matchall',
-      textContent: 'Hello, world!'
+      pattern: this.state.selectedPattern, 
+      textContent: this.refs.textContent.value
     }
     console.log(data);
     if(this.refs.textContent.value === '') {
@@ -46,6 +60,10 @@ class EvaluateText extends Component {
           <textarea ref="textContent" />
           <input type="submit" value="Evaluate" />
         </div>
+        <Patterns patterns={this.props.patterns} 
+                  onChange={this.changePattern.bind(this)}
+                  onDelete={this.deletePattern.bind(this)} 
+                  selectedPattern={this.state.selectedPattern} />
       </form>
     );
   }

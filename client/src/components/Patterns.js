@@ -6,19 +6,26 @@ class Patterns extends Component {
     this.props.onDelete(pattern);
   }
 
+  changePattern(pattern) {
+    this.props.onChange(pattern);
+  }
+
   render() {
     let patternItems;
     if(this.props.patterns) {
-      patternItems = this.props.patterns.map(pattern => {
+      patternItems = this.props.patterns.map(patternItem => {
         return (
-          <PatternItem key={pattern.pattern} pattern={pattern} onDelete={this.deletePattern.bind(this)} />
+          <PatternItem key={patternItem.pattern} patternItem={patternItem} 
+                       onDelete={this.deletePattern.bind(this)} 
+                       onChange={this.changePattern.bind(this)}
+                       selectedPattern={this.props.selectedPattern} />
         );
       });
     }
     return (
     <div className="patterns">
       <h3>Patterns</h3>
-      {patternItems}
+        {patternItems}
     </div>
     );
   }

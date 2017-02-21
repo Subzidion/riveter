@@ -5,11 +5,21 @@ class PatternItem extends Component {
     this.props.onDelete(pattern);
   }
 
+  handlePatternChange(e) {
+    this.props.onChange(e.target.value);
+  }
+
   render() {
     return (
-      <div>
-      <label><input className="Pattern" type="checkbox" value={this.props.pattern.pattern} />
-        <strong>{this.props.pattern.pattern}</strong></label> <a href="#" onClick={this.deletePattern.bind(this, this.props.pattern.pattern)}>X</a>
+      <div className="radio">
+        <label>
+          <input type="radio" name="pattern"
+                value={this.props.patternItem.pattern} 
+                checked={this.props.selectedPattern === this.props.patternItem.pattern}
+                onChange={this.handlePatternChange.bind(this)} />
+          <strong>{this.props.patternItem.pattern}</strong>
+        </label>
+        <a href="#" onClick={this.deletePattern.bind(this, this.props.patternItem.pattern)}>X</a>
       </div>
     );
   }

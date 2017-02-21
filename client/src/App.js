@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Patterns from './components/Patterns';
 import AddPattern from './components/AddPattern';
 import EvaluateText from './components/EvaluateText';
 import './App.css';
@@ -61,9 +60,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <EvaluateText />
         <AddPattern addPattern={this.handleAddPattern.bind(this)} />
-        <Patterns patterns={this.state.patterns} onDelete={this.handleDeletePattern.bind(this)}/> 
+        <EvaluateText patterns={this.state.patterns} onDelete={this.handleDeletePattern.bind(this)}/>
       </div>
     );
   }
