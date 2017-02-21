@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
+import axios from 'axios';
 
 import Patterns from './Patterns';
 
@@ -24,28 +24,20 @@ class EvaluateText extends Component {
   }
 
   handleSubmit(e) {
-    var data = {
-      pattern: this.state.selectedPattern, 
-      textContent: this.refs.textContent.value
-    }
-    console.log(data);
     if(this.refs.textContent.value === '') {
       alert('Cannot submit a blank pattern.');
     }
     else {
       console.log("Hitting server...");
-      $.ajax({
-        url: 'http://localhost:5000/api/v1/process/',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        cache: false,
-        success: function(data) {
-          console.log("SUCCESS: " + JSON.stringify(data));
-        },
-        error: function(xhr, status, err) {
-          console.log("ERR: " + err);
-        }
+      axios.post('/api/v1/process/', {
+        pattern: this.state.selectedPattern,
+        textContent: this.refs.textContent.value
+      })
+        .then(function(data) {
+          console.log("SUCCESS!: " + JSON.stringify(data));
+        })
+        .catch(function(err) {
+          console.log("ERROR: " + err);
       });
       e.preventDefault();
     }
