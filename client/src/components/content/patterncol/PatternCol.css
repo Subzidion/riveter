@@ -1,0 +1,43 @@
+.select_pattern ul, .quick_reference ul {
+  font-family: Roboto;
+}
+
+.pattern_col {
+  display: flex;
+  flex-flow: column wrap;
+  flex-grow: 2;
+  padding: 0 2% 0 1%;
+  justify-content: space-between;
+}
+
+.pattern_col p {
+  margin-bottom: 1vh;
+}
+
+.selected_pattern_list_container {
+    /* border-radius */
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  /* box-shadow */
+  -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  background: #fff;
+}
+
+.selected_pattern_list_container ul {
+  padding: 0;
+  margin: 0;
+  height: 25vh;
+  max-height: 25vh; /* necessary? */
+}
+
+.selected_pattern_list_container li {
+  list-style: none;
+  padding: 3px;
+}
+
+.selected_pattern_list_container li:hover {
+  background: #77dd77;
+}

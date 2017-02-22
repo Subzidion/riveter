@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+ul {
+  color: black;
+}
+
+.button {
+  background-color:#44c767;
+  -moz-border-radius:9px;
+	-webkit-border-radius:9px;
+	border-radius:9px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding: 1vh 1vh 1vh 1vh;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+
+.tab_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    float: left;
+    margin-top: 1vh;
+}
+
+.tab {
+   float: left;
+   text-align: center;
+    padding: 1vh;
+    text-decoration: none;
+    transition: 0.6s;
+    font-size: 1.1em;
+    border-left: 5px solid #00e600;
+    background-color: #ddd;
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+}
+
+.tab:hover {
+  background-color: #fff;
+}
+
+textarea {
+  outline: none;
+  resize: none;
+  font-family: Roboto Mono;
+  height: 100%;
+}

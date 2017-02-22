@@ -1,0 +1,9 @@
+.text_col_tab_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.text_col .button {
+  margin-bottom: 1vh;
+}

@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
-import AddPattern from './components/AddPattern';
+/*import AddPattern from './components/AddPattern';
 import EvaluateText from './components/EvaluateText';
-import JSONOutput from './components/JSONOutput';
+import JSONOutput from './components/JSONOutput';*/
+import Head from './components/Head';
+import Content from './components/content/Content';
 import './App.css';
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+          <div className="head_and_content_container">
+          <Head />
+          <Content />
+          </div>
+        );
+    }
+}
+
+export default App;
+/*class App extends Component {
   constructor() {
     super()
     this.state = {
@@ -71,7 +88,7 @@ class App extends Component {
     return (
       <div className="App">
         <AddPattern addPattern={this.handleAddPattern.bind(this)} />
-        <EvaluateText patterns={this.state.patterns} 
+        <EvaluateText patterns={this.state.patterns}
                       onDelete={this.handleDeletePattern.bind(this)}
                       onOutput={this.handleOutput.bind(this)} />
         <JSONOutput output={this.state.evaluateOutput} />
@@ -80,4 +97,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App;*/

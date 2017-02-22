@@ -1,0 +1,14 @@
+.head {
+  background: #2e3192;
+  color: white;
+  height: 8vh;
+  margin-bottom: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.head h1 {
+  font-size: 2em;
+  font-family: Lato;
+}
