@@ -12,6 +12,11 @@ class EvaluateText extends Component {
   }
 
   deletePattern(pattern) {
+    if(this.state.selectedPattern === pattern) {
+      this.setState({
+        selectedPattern: ''
+      });
+    }
     this.props.onDelete(pattern);
   }
 
@@ -24,7 +29,7 @@ class EvaluateText extends Component {
   }
 
   handleSubmit(e) {
-    if(this.refs.textContent.value === '') {
+    if(this.refs.textContent.value === '' || this.state.selectedPattern === '') {
       alert('Cannot submit a blank pattern.');
     }
     else {
