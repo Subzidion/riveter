@@ -34,12 +34,14 @@ class EvaluateText extends Component {
     }
     else {
       console.log("Hitting server...");
+      var th = this;
       axios.post('/api/v1/process/', {
         pattern: this.state.selectedPattern,
         textContent: this.refs.textContent.value
       })
         .then(function(data) {
           console.log("SUCCESS!: " + JSON.stringify(data));
+          th.props.onOutput(JSON.stringify(data));
         })
         .catch(function(err) {
           console.log("ERROR: " + err);
