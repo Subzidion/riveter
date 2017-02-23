@@ -10,7 +10,7 @@ class FeedbackCol extends Component {
       return (
         <div className="feedback_col">
           <FeedbackColTabSection />
-          <textarea readonly>Explanation Stuff</textarea>
+          <textarea>Placeholder</textarea>
         </div>
       );
   }

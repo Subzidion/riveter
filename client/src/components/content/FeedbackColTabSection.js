@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { feedbackColTabSelect } from '../../actions';
+import { connect } from 'react-redux';
 
 class FeedbackColTabSection extends Component {
   constructor(props) {

@@ -1,5 +1,7 @@
 .select_pattern ul, .quick_reference ul {
   font-family: Roboto;
+  overflow:hidden;
+  overflow-y:scroll
 }
 
 .pattern_col {
