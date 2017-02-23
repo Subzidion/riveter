@@ -1,4 +1,12 @@
-import { SELECT_PATTERN, CHANGE_TEXT } from './actionTypes';
+import { ADD_PATTERN, SELECT_PATTERN, CHANGE_TEXT } from './actionTypes';
+
+export function addPattern(name, pattern) {
+    return {
+        type: ADD_PATTERN,
+        name: name,
+        pattern: pattern
+    }
+}
 
 export function selectPattern(text) {
     return {

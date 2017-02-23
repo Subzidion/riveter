@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { selectPattern } from '../../../actions';
 import './AddPatternContainer.css';
 
 class AddPatternContainer extends Component {
@@ -15,4 +17,12 @@ class AddPatternContainer extends Component {
   }
 }
 
-export default AddPatternContainer;
+export default connect(null,
+    (dispatch) => {
+        return {
+            onPatternClick: (name) => {
+                dispatch(addPattern(name))
+            }
+        }
+    }
+)(AddPatternContainer);

@@ -1,25 +1,43 @@
-import { SELECT_PATTERN, CHANGE_TEXT } from '../actions/actionTypes';
+import { ADD_PATTERN, SELECT_PATTERN, CHANGE_TEXT } from '../actions/actionTypes';
 import axios from 'axios';
 
 const initialState = {
-    patternList: []
+    patternList: [],
+    currPattern: {name: ''},
+    jsonOutput: ''
 }
 
 export default function reduxApp(state = initialState, action) {
- //console.log(...state.patternList);
     switch(action.type) {
+      case ADD_PATTERN:
+          return Object.assign({}, state, {
+            patternList: [
+                ...state.patternList,
+                {
+                    name: action.name,
+                    pattern: action.pattern
+                }
+            ]
+          });
       case SELECT_PATTERN:
-            return Object.assign({}, state, {
+            /*return Object.assign({}, state, {
               patternList: [
                   ...state.patternList,
                   {
-                      name: action.name
+                      name: action.name,
+                      pattern: action.name
                   }
               ]
-            });
-      case CHANGE_TEXT:
-          callAPI(state.patternList[0], action.val);
+            });*/
+            state.currPattern.name=action.name;
             return state;
+      case CHANGE_TEXT:
+        let result = state.patternList.filter(function( obj ) {
+            return obj.name == state.currPattern.name;
+        });
+        callAPI(result[0], action.val);
+        return state;
+          //  return state;
         default:
             return state;
     }
@@ -28,7 +46,7 @@ export default function reduxApp(state = initialState, action) {
 
 function callAPI(patternObj, text) {
     if (typeof patternObj != 'undefined') {
-      let pattern = patternObj.name;
+      let pattern = patternObj.pattern;
       console.log(pattern);
       console.log(text);
 
@@ -45,7 +63,6 @@ function callAPI(patternObj, text) {
         .catch(function(err) {
           console.log("ERROR: " + err);
         });
-        //e.preventDefault?
       }
   }
 }

@@ -17,3 +17,17 @@
   padding-left: 0.5vw;
   padding-right: 0.5vw;
 }
+
+.add_pattern_container {
+  flex-grow: 3;
+   display: flex;
+   flex-direction: column;
+}
+
+.add_pattern_container input {
+   font-family: Roboto Mono;
+}
+
+.add_pattern_container textarea {
+  height: 8vh;
+}

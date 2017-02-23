@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import FeedbackColTabSection from './FeedbackColTabSection';
+import { connect } from 'react-redux';
 import './FeedbackCol.css';
+
+const mapStateToProps = function(state){
+  return {
+    jsonOutput: state.jsonOutput
+  }
+}
 
 class FeedbackCol extends Component {
   constructor(props) {
@@ -10,10 +17,10 @@ class FeedbackCol extends Component {
       return (
         <div className="feedback_col">
           <FeedbackColTabSection />
-          <textarea>Placeholder</textarea>
+          <textarea>{this.props.jsonOutput}</textarea>
         </div>
       );
   }
 }
 
-export default FeedbackCol;
+export default connect(mapStateToProps)(FeedbackCol)

@@ -2,25 +2,22 @@ import React, { Component } from 'react';
 import Pattern from './Pattern';
 import { connect } from 'react-redux';
 
+const mapStateToProps = function(state){
+  return {
+    patternList: state.patternList
+  }
+}
+
 class SelectPatternList extends Component {
   constructor(props) {
       super(props);
   }
+
   renderList() {
-    let patternList = [
-      "basic.matchall",
-      "basic.element",
-      "basic.element_bracketed",
-      "basic.element_quoted",
-      "basic.datetime_patterns",
-      "basic.network_patterns",
-      "basic.punctuation",
-      "basic.unmatched"
-    ];
     let list = [];
-    for (let i = 0; i < patternList.length; i++) {
+    for (let i = 0; i < this.props.patternList.length; i++) {
         list.push(
-            <Pattern name={patternList[i]} />
+            <Pattern name={this.props.patternList[i].name} />
         );
     }
     return <ul>{list}</ul>;
@@ -34,10 +31,4 @@ class SelectPatternList extends Component {
   }
 }
 
-export default connect(
-    (state) => {
-        return {
-            patternList: state.patternList
-        }
-	    }
-)(SelectPatternList);
+export default connect(mapStateToProps)(SelectPatternList)
