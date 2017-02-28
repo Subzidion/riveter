@@ -1,0 +1,20 @@
+{
+    "extends": "standard",
+    "rules": {
+      "space-before-function-paren": ["error", {
+          "anonymous": "never",
+          "named": "never",
+          "asyncArrow": "ignore"
+      }],
+      "keyword-spacing": [2, {"overrides": {
+        "if": {"after": false},
+        "switch": {"after": false}
+      }}],
+      "react/jsx-uses-vars": "error"
+    },
+    "plugins": [
+        "standard",
+        "promise",
+        "react"
+    ]
+}

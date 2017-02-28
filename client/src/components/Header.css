@@ -1,4 +1,4 @@
-.head {
+.header {
   background: #2e3192;
   color: white;
   height: 8vh;
@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.head h1 {
+.header h1 {
   font-size: 2em;
   font-family: Lato;
 }

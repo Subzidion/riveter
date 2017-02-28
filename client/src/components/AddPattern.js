@@ -1,39 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import './AddPattern.css'
 
 class AddPattern extends Component {
-  constructor() {
-    super();
-    this.state = {
-      newPattern: {}
-    }
-  }
-
-  handleSubmit(e) {
-    if(this.refs.pattern.value === '') {
-      alert('Cannot submit a blank pattern.');
-    }
-    else {
-      this.setState({newPattern: {
-        pattern: this.refs.pattern.value
-      }}, function() {
-        this.props.addPattern(this.state.newPattern);
-      });
-    }
-    e.preventDefault();
-  }
-
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-      <br />
-        <div>
-          <label>Pattern: </label>
-          <input type="text" ref="pattern" />
-          <input type="submit" value="Add Pattern" />
+      <div>
+        <p>Create Pattern</p>
+        <div className="addPattern">
+          <input type="text" placeholder="Name" onChange={ this.props.nameChange } />
+          <textarea plpaceholder="Pattern" onChange={this.props.patternChange }></textarea>
         </div>
-      </form>
-    );
+        <input className="button" type="button" value="Add Pattern" onClick={ this.props.addPattern } />
+      </div>
+    )
   }
 }
 
-export default AddPattern;
+export default AddPattern

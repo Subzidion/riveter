@@ -1,4 +1,4 @@
-.text_col {
+.textColumn {
   display: flex;
   flex-direction: column;
   flex-grow: 3;
