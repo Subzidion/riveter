@@ -1,22 +1,30 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { selectPattern } from '../actions'
 import PatternList from '../components/PatternList'
+
+const mapStateToProps = function(state) {
+  return {
+    patternList: state.patternList
+  }
+}
 
 class AvailablePatternsContainer extends Component {
   render() {
-    let availablePatterns = [
-      'basic.matchall',
-      'basic.element',
-      'basic.element_bracketed',
-      'basic.element_quoted',
-      'basic.datetime_patterns',
-      'basic.network_patterns',
-      'basic.punctuation',
-      'basic.unmatched'
-    ]
     return (
-      <PatternList title="Available Patterns" patterns={ availablePatterns }/>
+      <PatternList title="Available Patterns" 
+                   patterns={ this.props.patternList } 
+                   onClick={ (clickedPattern) => this.props.onClick(clickedPattern) }/>
     )
   }
 }
 
-export default AvailablePatternsContainer
+export default connect(mapStateToProps,
+  (dispatch) => {
+    return {
+      onClick: (pattern) => {
+        dispatch(selectPattern(pattern))
+      }
+    }
+  })(AvailablePatternsContainer)
+  

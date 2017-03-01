@@ -1,4 +1,4 @@
-import { ADD_PATTERN, SELECT_PATTERN, CHANGE_TEXT } from './ActionTypes'
+import { ADD_PATTERN, SELECT_PATTERN, DESELECT_PATTERN, CHANGE_TEXT } from './ActionTypes'
 
 export function addPattern(name, pattern) {
   return {
@@ -8,14 +8,22 @@ export function addPattern(name, pattern) {
   }
 }
 
-export function selectPattern(text) {
+export function selectPattern(pattern) {
   return {
     type: SELECT_PATTERN,
-    name: text
+    name: pattern
+  }
+}
+
+export function deselectPattern(pattern) {
+  return {
+    type: DESELECT_PATTERN,
+    name: pattern
   }
 }
 
 export function changeText(text) {
+  console.log('New Text: ' + text)
   return {
     type: CHANGE_TEXT,
     val: text
