@@ -1,8 +1,9 @@
-import { ADD_PATTERN, SELECT_PATTERN, DESELECT_PATTERN, CHANGE_TEXT } from './ActionTypes'
+import * as types from './ActionTypes'
+import axios from 'axios'
 
 export function addPattern(name, pattern) {
   return {
-    type: ADD_PATTERN,
+    type: types.ADD_PATTERN,
     name: name,
     pattern: pattern
   }
@@ -10,22 +11,56 @@ export function addPattern(name, pattern) {
 
 export function selectPattern(pattern) {
   return {
-    type: SELECT_PATTERN,
+    type: types.SELECT_PATTERN,
     name: pattern
   }
 }
 
 export function deselectPattern(pattern) {
   return {
-    type: DESELECT_PATTERN,
+    type: types.DESELECT_PATTERN,
     name: pattern
   }
 }
 
 export function changeText(text) {
-  console.log('New Text: ' + text)
+  return function(dispatch) {
+    dispatch(requestData(text))
+  }
+}
+
+function requestData() {
   return {
-    type: CHANGE_TEXT,
-    val: text
+    type: types.REQUEST_DATA
+  }
+}
+
+function receiveData(json) {
+  return {
+    type: types.RECEIVE_DATA,
+    data: json
+  }
+}
+
+function receiveError(json) {
+  return {
+    type: types.RECEIVE_ERROR,
+    data: json
+  }
+}
+
+export function evaluateText(pattern, text) {
+  return function(dispatch) {
+    dispatch(requestData())
+    return axios.post('/api/v1/process/', {
+      pattern: pattern,
+      textContent: text
+    })
+    .then(function(data) {
+      dispatch(receiveData(data))
+    })
+    .catch(function(err) {
+      dispatch(receiveError(err))
+    })
   }
 }

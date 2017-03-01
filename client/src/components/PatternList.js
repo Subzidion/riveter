@@ -6,7 +6,7 @@ class PatternList extends Component {
     let patterns = []
     if(this.props.patterns) {
       patterns = this.props.patterns.map(pattern => {
-        return <Pattern pattern={ pattern } 
+        return <Pattern pattern={ pattern }
                         onClick={ (clickedPattern) => this.props.onClick(clickedPattern) }/>
       })
     }

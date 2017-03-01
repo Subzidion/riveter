@@ -1,5 +1,4 @@
-import { ADD_PATTERN, SELECT_PATTERN, DESELECT_PATTERN, CHANGE_TEXT } from '../actions/ActionTypes'
-import axios from 'axios'
+import * as types from '../actions/ActionTypes'
 
 const initialState = {
   patternList: [
@@ -13,62 +12,45 @@ const initialState = {
     'basic.unmatched'
   ],
   currentPattern: 'basic.matchall',
-  jsonOutput: ''
+  currentText: '',
+  jsonOutput: 'test'
 }
 
-export default function RiveterStore(state = initialState, action) {
+export default function RiveterReducer(state = initialState, action) {
   switch(action.type) {
-    case ADD_PATTERN:
+    case types.ADD_PATTERN:
       if(action.pattern !== '') {
         return Object.assign({}, state, {
           patternList: [
             ...state.patternList,
-            action.pattern 
+            action.pattern
           ]
         })
       }
       return state
 
-    case SELECT_PATTERN:
+    case types.SELECT_PATTERN:
       return Object.assign({}, state, {
         currentPattern: action.name
       })
 
-    case DESELECT_PATTERN:
+    case types.DESELECT_PATTERN:
       return Object.assign({}, state, {
         currentPattern: undefined
       })
 
-    case CHANGE_TEXT:
-      let result = state.patternList.filter(function(obj) {
-        return obj.name === state.currentPattern.name
+    case types.REQUEST_DATA:
+      return state
+
+    case types.RECEIVE_DATA:
+      return Object.assign({}, state, {
+        jsonOutput: JSON.stringify(action.data.data)
       })
-      callAPI(result[0], action.val)
+
+    case types.RECEIVE_ERROR:
       return state
 
     default:
       return state
-  }
-}
-
-function callAPI(patternObj, text) {
-  if(typeof patternObj !== 'undefined') {
-    let pattern = patternObj.pattern
-    console.log(pattern)
-    console.log(text)
-
-    if(text !== '' && pattern !== '') {
-      console.log('Hitting server...')
-      axios.post('/api/v1/process/', {
-        pattern: pattern,
-        textContent: text
-      })
-      .then(function(data) {
-        console.log('SUCCESS!: ' + JSON.stringify(data))
-      })
-      .catch(function(err) {
-        console.log('ERROR: ' + err)
-      })
-    }
   }
 }

@@ -20,7 +20,7 @@ class AddPattern extends Component {
   render() {
     return (
       <div>
-        <p>Create Pattern</p>
+        <p>Add Pattern</p>
         <div className="addPattern">
           <input type="text" placeholder="Name" onChange={ this.nameChange.bind(this) } />
           <textarea placeholder="Pattern" onChange={this.patternChange.bind(this) }></textarea>

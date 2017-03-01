@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-// import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux'
-import RiveterStore from './reducers'
+import RiveterReducer from './reducers'
 import Header from './components/Header'
 import PatternColumn from './components/PatternColumn'
 import TextColumn from './components/TextColumn'
 import FeedbackColumn from './components/FeedbackColumn'
 import './index.css'
 
-const store = createStore(RiveterStore)
-
+const store = createStore(
+  RiveterReducer,
+  applyMiddleware(thunkMiddleware)
+)
 class BaseApp extends Component {
   render() {
     return (

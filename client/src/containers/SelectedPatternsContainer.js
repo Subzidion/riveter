@@ -12,7 +12,7 @@ const mapStateToProps = function(state) {
 class SelectedPatternsContainer extends Component {
   render() {
     return (
-      <PatternList title="Selected Patterns" 
+      <PatternList title="Selected Patterns"
                    patterns={ [this.props.currentPattern] }
                    onClick={ (clickedPattern) => this.props.onClick(clickedPattern) }/>
     )
@@ -24,6 +24,6 @@ export default connect(mapStateToProps,
     return {
       onClick: (pattern) => {
         dispatch(deselectPattern(pattern))
-      },
+      }
     }
   })(SelectedPatternsContainer)
