@@ -1,7 +1,7 @@
 # Symlinks and directories of symlinks:
 librosie.c
 librosie.a
-include/*
+server/include/
 libs/*
 
 # JS files

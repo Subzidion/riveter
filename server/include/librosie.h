@@ -1,1 +1,0 @@
-/home/subzidion/work/rosie-pattern-language/ffi/librosie/librosie.h
