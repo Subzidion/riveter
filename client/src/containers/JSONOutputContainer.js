@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import TextArea from '../components/TextArea'
 
 const mapStateToProps = function(state) {
   return {
@@ -8,13 +9,13 @@ const mapStateToProps = function(state) {
 }
 
 class JSONOutputContainer extends Component {
-  handleChange() {
-    console.log("Te!!")
-  }
-
   render() {
     return (
-      <textarea value={ this.props.jsonOutput } onChange={ this.handleChange.bind(this) }></textarea>
+      <TextArea
+        name="ouput"
+        title="Output"
+        content={ this.props.jsonOutput }
+      />
     )
   }
 }

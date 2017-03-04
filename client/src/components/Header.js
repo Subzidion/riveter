@@ -7,7 +7,6 @@ class Header extends Component {
       <AppBar
         title="Riveter"
         showMenuIconButton={false}
-        iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
     )
   }

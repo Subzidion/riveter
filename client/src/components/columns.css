@@ -2,14 +2,15 @@
   padding: 0 2% 0 1%;
   display: flex;
   flex-flow: column wrap;
-  flex-grow: 2;
+  flex-grow: 1;
   justify-content: space-between;
 }
 
 .textColumn {
   display: flex;
   flex-direction: column;
-  flex-grow: 3;
+  flex-grow: 4;
+  max-height: 100%;
 }
 
 .feedbackColumn {
