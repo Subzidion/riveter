@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import JSONOutputContainer from '../containers/JSONOutputContainer'
-import './FeedbackColumn.css'
+import './columns.css'
 
 class FeedbackColumn extends Component {
   render() {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { evaluateText } from '../actions'
+import TextField from 'material-ui/TextField'
 
 const mapStateToProps = function(state) {
   return {
@@ -8,10 +9,25 @@ const mapStateToProps = function(state) {
   }
 }
 
+const style = {
+  maxHeight: '100%',
+  minHeight: '100%',
+  overflowY: 'scroll',
+  width: '100%',
+  backgroundColor: 'white',
+}
+
 class MainTextContainer extends Component {
   render() {
     return (
-      <textarea onChange={ (event) => this.props.onTextChange(this.props.currentPattern, event.target.value) }></textarea>
+      <TextField
+        floatingLabelText="Text for Matching"
+        floatingLabelFixed={true}
+        rows={30}
+        style={style}
+        multiLine={true}
+        onChange={ (event) => this.props.onTextChange(this.props.currentPattern, event.target.value) }
+      />
     )
   }
 }

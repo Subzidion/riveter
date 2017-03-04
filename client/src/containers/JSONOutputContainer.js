@@ -8,9 +8,13 @@ const mapStateToProps = function(state) {
 }
 
 class JSONOutputContainer extends Component {
+  handleChange() {
+    console.log("Te!!")
+  }
+
   render() {
     return (
-      <textarea value={ this.props.jsonOutput }></textarea>
+      <textarea value={ this.props.jsonOutput } onChange={ this.handleChange.bind(this) }></textarea>
     )
   }
 }
