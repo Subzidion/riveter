@@ -34,7 +34,6 @@ class AddPattern extends Component {
         <Subheader style={styles.headingStyle}>Add Pattern</Subheader>
         <Paper style={styles.paperStyle} zDepth={2} rounded={true}>
           <TextField style={styles.inputStyle} hintText="Name" onChange={ this.nameChange.bind(this) } />
-          <br></br>
           <AutoComplete style={styles.inputStyle} hintText="Pattern" fullWidth={true} dataSource={this.props.patternList} onUpdateInput={ (searchText, dataSource) => this.patternChange(searchText, dataSource) } />
           <RaisedButton label="Add Pattern" primary={true} style={styles.buttonStyle} onClick={ () => this.props.addPattern(this.state.name, this.state.pattern) } />
         </Paper>

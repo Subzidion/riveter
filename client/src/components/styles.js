@@ -1,5 +1,5 @@
 export const inputStyle = {
-  backgroudnColor: 'white',
+  display: 'block',
   width: '100%',
 }
 
@@ -20,7 +20,6 @@ export const paperStyle = {
   padding: 15,
   margin: 5,
   textAlign: 'left',
-  position: 'relative',
 }
 
 export const headingStyle = {
@@ -28,14 +27,6 @@ export const headingStyle = {
   color: 'black',
 }
 
-export const patternStyle = {
-  backgroundColor: 'white',
-  width: '100%',
-}
-
 export const buttonStyle = {
-  position: 'absolute',
-  bottom: 15,
-  right: 15,
-  float: 'right',
+  display: 'block',
 }
