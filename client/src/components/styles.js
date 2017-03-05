@@ -1,32 +1,32 @@
 export const inputStyle = {
   display: 'block',
-  width: '100%',
+  width: '100%'
 }
 
 export const textAreaStyle = {
   maxHeight: '100%',
-  width: '100%',
+  width: '100%'
 }
 
 export const patternListStyle = {
   height: '25vh',
   overflowY: 'scroll',
   margin: 5,
-  textAlign: 'left',
+  textAlign: 'left'
 }
 
 export const paperStyle = {
   height: '100%',
   padding: 15,
   margin: 5,
-  textAlign: 'left',
+  textAlign: 'left'
 }
 
 export const headingStyle = {
   fontSize: '1.25em',
-  color: 'black',
+  color: 'black'
 }
 
 export const buttonStyle = {
-  display: 'block',
+  display: 'block'
 }
