@@ -9,7 +9,17 @@ const initialState = {
     'basic.datetime_patterns',
     'basic.network_patterns',
     'basic.punctuation',
-    'basic.unmatched'
+    'basic.unmatched',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10'
   ],
   currentPattern: 'basic.matchall',
   currentText: '',

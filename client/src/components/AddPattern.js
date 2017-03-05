@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addPattern } from '../actions'
-import './AddPattern.css'
+import TextField from 'material-ui/TextField'
+import AutoComplete from 'material-ui/AutoComplete'
+import RaisedButton from 'material-ui/RaisedButton'
+import Subheader from 'material-ui/Subheader'
+import Paper from 'material-ui/Paper'
+import * as styles from './styles'
+
+const mapStateToProps = function(state) {
+  return {
+    patternList: state.patternList
+  }
+}
 
 class AddPattern extends Component {
   constructor(props) {
@@ -13,25 +24,26 @@ class AddPattern extends Component {
     this.setState({name: event.target.value})
   }
 
-  patternChange(event) {
-    this.setState({pattern: event.target.value})
+  patternChange(searchText, dataSource) {
+    this.setState({pattern: searchText})
   }
 
   render() {
     return (
       <div>
-        <p>Add Pattern</p>
-        <div className="addPattern">
-          <input type="text" placeholder="Name" onChange={ this.nameChange.bind(this) } />
-          <textarea placeholder="Pattern" onChange={this.patternChange.bind(this) }></textarea>
-        </div>
-        <input className="button" type="button" value="Add Pattern" onClick={ () => this.props.addPattern(this.state.name, this.state.pattern) } />
+        <Subheader style={styles.headingStyle}>Add Pattern</Subheader>
+        <Paper style={styles.paperStyle} zDepth={2} rounded={true}>
+          <TextField style={styles.inputStyle} hintText="Name" onChange={ this.nameChange.bind(this) } />
+          <br></br>
+          <AutoComplete style={styles.inputStyle} hintText="Pattern" dataSource={this.props.patternList} onUpdateInput={ (searchText, dataSource) => this.patternChange(searchText, dataSource) } />
+          <RaisedButton label="Add Pattern" primary={true} style={styles.buttonStyle} onClick={ () => this.props.addPattern(this.state.name, this.state.pattern) } />
+        </Paper>
       </div>
     )
   }
 }
 
-export default connect(null,
+export default connect(mapStateToProps,
   (dispatch) => {
     return {
       addPattern: (name, pattern) => {

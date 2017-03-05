@@ -14,7 +14,7 @@ class SelectedPatternsContainer extends Component {
     return (
       <PatternList title="Selected Patterns"
                    patterns={ [this.props.currentPattern] }
-                   onClick={ (clickedPattern) => this.props.onClick(clickedPattern) }/>
+                   onChange={ (event, clickedPattern) => this.props.onChange(clickedPattern) }/>
     )
   }
 }
@@ -22,7 +22,7 @@ class SelectedPatternsContainer extends Component {
 export default connect(mapStateToProps,
   (dispatch) => {
     return {
-      onClick: (pattern) => {
+      onChange: (pattern) => {
         dispatch(deselectPattern(pattern))
       }
     }

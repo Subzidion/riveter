@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { evaluateText } from '../actions'
+import TextArea from '../components/TextArea'
 
 const mapStateToProps = function(state) {
   return {
@@ -11,7 +12,11 @@ const mapStateToProps = function(state) {
 class MainTextContainer extends Component {
   render() {
     return (
-      <textarea onChange={ (event) => this.props.onTextChange(this.props.currentPattern, event.target.value) }></textarea>
+      <TextArea
+        name="input"
+        title="Test Text"
+        onChange={ (event) => this.props.onTextChange(this.props.currentPattern, event.target.value) }
+      />
     )
   }
 }

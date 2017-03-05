@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
-import Pattern from './Pattern'
+import { List, ListItem, makeSelectable } from 'material-ui/List'
+import Paper from 'material-ui/Paper'
+import Subheader from 'material-ui/Subheader'
+import * as styles from './styles'
+
+const SelectableList = makeSelectable(List)
 
 class PatternList extends Component {
   render() {
     let patterns = []
     if(this.props.patterns) {
       patterns = this.props.patterns.map(pattern => {
-        return <Pattern pattern={ pattern }
-                        onClick={ (clickedPattern) => this.props.onClick(clickedPattern) }/>
+        return <ListItem key={ pattern } value={ pattern } primaryText={ pattern }/>
       })
     }
 
     return (
       <div>
-        <p>{this.props.title}</p>
-        <div className="patternList">
-          <ul>
+        <Subheader style={ styles.headingStyle }>{ this.props.title }</Subheader>
+        <Paper style={ styles.patternListStyle } zDepth={2} rounded={true}>
+          <SelectableList onChange={this.props.onChange }>
             { patterns }
-          </ul>
-        </div>
+          </SelectableList>
+        </Paper>
       </div>
     )
   }

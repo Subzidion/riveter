@@ -3,7 +3,7 @@ import AddPatternContainer from '../containers/AddPatternContainer'
 import AvailablePatternsContainer from '../containers/AvailablePatternsContainer'
 import SelectedPatternsContainer from '../containers/SelectedPatternsContainer'
 
-import './PatternColumn.css'
+import './columns.css'
 
 class PatternColumn extends Component {
   render() {
