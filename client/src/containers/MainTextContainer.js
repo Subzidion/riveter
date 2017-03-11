@@ -15,7 +15,6 @@ class MainTextContainer extends Component {
       <TextArea
         name="input"
         title="Test Text"
-        onChange={ (event) => this.props.onTextChange(this.props.currentPattern, event.target.value) }
       />
     )
   }
