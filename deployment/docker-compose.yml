@@ -1,0 +1,18 @@
+version: '2'
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: api.Dockerfile
+
+  nginx:
+    build: 
+      context: .
+      dockerfile: riveter_nginx.Dockerfile
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    links:
+      - "api"
