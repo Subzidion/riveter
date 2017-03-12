@@ -54,13 +54,8 @@ func main() {
 	}
 
     r := gin.Default()
-    r.Static("/static", "src/riveter/client/build/static")
-    r.LoadHTMLFiles("src/riveter/client/build/index.html")
-    r.GET("/", func(c *gin.Context) {
-        c.HTML(http.StatusOK, "index.html", nil)
-    })
 
-    v1 := r.Group("/api/v1")
+    v1 := r.Group("/v1")
     {
         process := v1.Group("/process")
         {
