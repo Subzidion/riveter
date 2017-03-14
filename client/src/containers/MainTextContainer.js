@@ -13,7 +13,7 @@ const mapStateToProps = function(state) {
 
 class MainTextContainer extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       parseText: ''
     }
@@ -25,15 +25,14 @@ class MainTextContainer extends Component {
         <TextArea
           name="input"
           title="Test Text"
-          onChange={ () => this.setState({ parseText: event.target.value }) }
-          
+          onChange={ (event) => this.setState({ parseText: event.target.value }) }
         />
         <RaisedButton label="Parse Text"
           primary={true}
           style={styles.buttonStyle}
           onClick={ () => this.props.onTextChange(this.props.currentPattern, this.state.parseText) }
         />
-      </div> 
+      </div>
     )
   }
 }
