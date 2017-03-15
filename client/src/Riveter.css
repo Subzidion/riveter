@@ -12,3 +12,9 @@ body {
   flex-direction: row;
   justify-content: space-between;
 }
+
+@media (max-width: 750px) {
+  .content {
+    flex-direction: column;
+  }
+}

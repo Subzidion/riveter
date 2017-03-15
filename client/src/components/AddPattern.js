@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addPattern } from '../actions'
 import TextField from 'material-ui/TextField'
-import AutoComplete from 'material-ui/AutoComplete'
 import RaisedButton from 'material-ui/RaisedButton'
 import Subheader from 'material-ui/Subheader'
 import Paper from 'material-ui/Paper'
@@ -21,7 +20,7 @@ class AddPattern extends Component {
         <Subheader style={styles.headingStyle}>Add Pattern</Subheader>
         <Paper style={styles.paperStyle} zDepth={2} rounded={true}>
           <TextField ref="name" style={styles.inputStyle} hintText="Name" />
-          <AutoComplete ref="pattern" style={styles.inputStyle} hintText="Pattern" fullWidth={true} dataSource={this.props.patternList} />
+          <TextField ref="pattern" style={styles.inputStyle} hintText="Pattern" fullWidth={true} />
           <RaisedButton label="Add Pattern" primary={true} style={styles.buttonStyle} onClick={ () => this.props.addPattern(this.refs.name.input.value, this.refs.pattern.state.searchText) } />
         </Paper>
       </div>
