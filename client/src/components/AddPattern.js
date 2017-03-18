@@ -21,7 +21,7 @@ class AddPattern extends Component {
         <Paper style={styles.paperStyle} zDepth={2} rounded={true}>
           <TextField ref="name" style={styles.inputStyle} hintText="Name" />
           <TextField ref="pattern" style={styles.inputStyle} hintText="Pattern" fullWidth={true} />
-          <RaisedButton label="Add Pattern" primary={true} style={styles.buttonStyle} onClick={ () => this.props.addPattern(this.refs.name.input.value, this.refs.pattern.state.searchText) } />
+          <RaisedButton label="Add Pattern" primary={true} style={styles.buttonStyle} onClick={ () => this.props.addPattern(this.refs.name.input.value, this.refs.pattern.input.value) } />
         </Paper>
       </div>
     )
