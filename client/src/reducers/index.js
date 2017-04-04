@@ -1,6 +1,6 @@
 import * as types from '../actions/ActionTypes'
 
-const initialState = {
+export const initialState = {
   patternList: [
     'basic.matchall',
     'basic.element',
@@ -9,17 +9,7 @@ const initialState = {
     'basic.datetime_patterns',
     'basic.network_patterns',
     'basic.punctuation',
-    'basic.unmatched',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10'
+    'basic.unmatched'
   ],
   currentPattern: 'basic.matchall',
   currentText: '',

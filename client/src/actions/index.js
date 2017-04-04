@@ -29,20 +29,20 @@ export function changeText(text) {
   }
 }
 
-function requestData() {
+export function requestData() {
   return {
     type: types.REQUEST_DATA
   }
 }
 
-function receiveData(json) {
+export function receiveData(json) {
   return {
     type: types.RECEIVE_DATA,
     data: json
   }
 }
 
-function receiveError(json) {
+export function receiveError(json) {
   return {
     type: types.RECEIVE_ERROR,
     data: json
