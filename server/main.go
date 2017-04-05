@@ -54,7 +54,10 @@ func main() {
 	}
 
     r := gin.Default()
-
+    r.GET("/", func(c *gin.Context) {
+      c.JSON(200, gin.H{
+      })
+	  })
     v1 := r.Group("/v1")
     {
         process := v1.Group("/process")
