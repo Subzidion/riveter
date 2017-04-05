@@ -19,4 +19,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: Subzidion/riveter
-    branch: master
+    branch: deployment
