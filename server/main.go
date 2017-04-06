@@ -29,10 +29,8 @@ import (
     "strconv"
     "net/http"
     "log"
-    "time"
 
     "github.com/gin-gonic/gin"
-    "github.com/itsjamie/gin-cors"
 )
 
 type RosieRequest struct {
@@ -49,6 +47,14 @@ func gostring_to_structStringptr(s string) *C.struct_rosieL_string {
 	return cstr_ptr
 }
 
+func CORSMiddleware() gin.HandlerFunc {
+  return func(c *gin.Context) {
+    c.Writer.Header().Set("Content-Type", "application/json")
+    c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+    c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, Authorization")
+  }
+}
+
 func main() {
 	rosie_home := os.Getenv("ROSIE_HOME")
 	if rosie_home == "" {
@@ -56,15 +62,7 @@ func main() {
 	}
 
     r := gin.Default()
-    r.Use(cors.Middleware(cors.Config{
-      Origins:  "*.riveter.site",
-      Methods:  "GET, POST",
-      RequestHeaders: "Origin, Authorization, Content-Type",
-      ExposedHeaders: "",
-      MaxAge: 50 * time.Second,
-      Credentials: false,
-      ValidateHeaders: false,
-    }))
+    r.Use(CORSMiddleware())
     r.GET("/", func(c *gin.Context) {
       c.JSON(200, gin.H{
       })
