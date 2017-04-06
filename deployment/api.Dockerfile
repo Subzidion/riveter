@@ -16,6 +16,7 @@ ENV ROSIE_HOME /opt/rosie
 ENV ROSIE_LIB /opt/rosie/ffi/librosie
 
 RUN go get github.com/gin-gonic/gin
+RUN go get github.com/itsjamie/gin-cors
 
 RUN git clone https://github.com/Subzidion/riveter.git $GOPATH/src/riveter/
 

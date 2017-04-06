@@ -29,8 +29,10 @@ import (
     "strconv"
     "net/http"
     "log"
+    "time"
 
     "github.com/gin-gonic/gin"
+    "github.com/itsjamie/gin-cors"
 )
 
 type RosieRequest struct {
@@ -54,6 +56,15 @@ func main() {
 	}
 
     r := gin.Default()
+    r.Use(cors.Middleware(cors.Config{
+      Origins:  "*.riveter.site",
+      Methods:  "GET, POST",
+      RequestHeaders: "Origin, Authorization, Content-Type",
+      ExposedHeaders: "",
+      MaxAge: 50 * time.Second,
+      Credentials: false,
+      ValidateHeaders: false,
+    }))
     r.GET("/", func(c *gin.Context) {
       c.JSON(200, gin.H{
       })
