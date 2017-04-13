@@ -49,10 +49,16 @@ export function receiveError(json) {
   }
 }
 
+export function backToEdit() {
+  return {
+    type: types.BACK_EDIT,
+  }
+}
+
 export function evaluateText(pattern, text) {
   return function(dispatch) {
     dispatch(requestData())
-    return axios.post('https://api.riveter.site/v1/process/', {
+    return axios.post('http://localhost:5000/v1/process/', {
       pattern: pattern,
       textContent: text
     })

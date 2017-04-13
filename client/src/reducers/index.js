@@ -44,11 +44,19 @@ export default function RiveterReducer(state = initialState, action) {
 
     case types.RECEIVE_DATA:
       return Object.assign({}, state, {
-        jsonOutput: JSON.stringify(action.data.data)
+        jsonOutput: JSON.stringify(action.data.data),
+        hasResult: true
       })
 
     case types.RECEIVE_ERROR:
-      return state
+      return Object.assign({}, state, {
+        hasResult: true
+      })
+
+    case types.BACK_EDIT:
+      return Object.assign({}, state, {
+        hasResult: false
+      })
 
     default:
       return state

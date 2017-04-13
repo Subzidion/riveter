@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { evaluateText } from '../actions'
 import TextArea from '../components/TextArea'
+import HighlightedText from '../components/HighlightedText'
 import RaisedButton from 'material-ui/RaisedButton'
 import * as styles from '../components/styles'
 
 const mapStateToProps = function(state) {
   return {
-    currentPattern: state.currentPattern
+    currentPattern: state.currentPattern,
+    hasResult: state.hasResult
   }
 }
 
@@ -20,20 +22,31 @@ class MainTextContainer extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <TextArea
-          name="input"
+    if(!this.props.hasResult) {
+      return (
+        <div>
+          <TextArea
+            name="input"
+            title="Test Text"
+            onChange={ (event) => this.setState({ parseText: event.target.value }) }
+          />
+          <RaisedButton label="Parse Text"
+            primary={true}
+            style={styles.buttonStyle}
+            onClick={ () => this.props.onTextChange(this.props.currentPattern, this.state.parseText) }
+          />
+        </div>
+      )
+    } else {
+      return (
+        <div>
+        <HighlightedText
           title="Test Text"
-          onChange={ (event) => this.setState({ parseText: event.target.value }) }
+          text={ this.state.parseText }
         />
-        <RaisedButton label="Parse Text"
-          primary={true}
-          style={styles.buttonStyle}
-          onClick={ () => this.props.onTextChange(this.props.currentPattern, this.state.parseText) }
-        />
-      </div>
-    )
+        </div>
+      )
+    }
   }
 }
 

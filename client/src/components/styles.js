@@ -31,3 +31,7 @@ export const headingStyle = {
 export const buttonStyle = {
   display: 'block'
 }
+
+export const highlightStyle = {
+  backgroundColor: 'yellow'
+}
