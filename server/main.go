@@ -24,27 +24,26 @@ package main
 import "C"
 
 import (
-    "encoding/json"
-    "os"
-    "strconv"
-    "net/http"
-    "log"
+  "encoding/json"
+  "os"
+  "net/http"
+  "log"
 
-    "github.com/gin-gonic/gin"
+  "github.com/gin-gonic/gin"
 )
 
 type RosieRequest struct {
-    Pattern string `form:"pattern" json:"pattern" binding:"required"`
-    Text    string `form:"textContent" json:"textContent" binding:"required"`
+  Pattern string `form:"pattern" json:"pattern" binding:"required"`
+  Text    string `form:"textContent" json:"textContent" binding:"required"`
 }
 
 func structString_to_GoString(cstr C.struct_rosieL_string) string {
-	return C.GoStringN(C.to_char_ptr(cstr.ptr), C.int(cstr.len))
+  return C.GoStringN(C.to_char_ptr(cstr.ptr), C.int(cstr.len))
 }
 
 func gostring_to_structStringptr(s string) *C.struct_rosieL_string {
-	var cstr_ptr = C.new_string_ptr(C.int(len(s)), C.CString(s))
-	return cstr_ptr
+  var cstr_ptr = C.new_string_ptr(C.int(len(s)), C.CString(s))
+  return cstr_ptr
 }
 
 func CORSMiddleware() gin.HandlerFunc {
@@ -62,126 +61,112 @@ func CORSMiddleware() gin.HandlerFunc {
 }
 
 func main() {
-	rosie_home := os.Getenv("ROSIE_HOME")
-	if rosie_home == "" {
-		log.Fatal("Environment variable ROSIE_HOME is not set.  Must be set to root of rosie directory.\n")
-	}
+  rosie_home := os.Getenv("ROSIE_HOME")
+  if rosie_home == "" {
+    log.Fatal("Environment variable ROSIE_HOME is not set.  Must be set to root of rosie directory.\n")
+  }
 
-    r := gin.Default()
-    r.Use(CORSMiddleware())
-    r.GET("/", func(c *gin.Context) {
-      c.JSON(200, gin.H{
-      })
-	  })
-    v1 := r.Group("/v1")
+  r := gin.Default()
+  r.Use(CORSMiddleware())
+  r.GET("/", func(c *gin.Context) {
+    c.JSON(200, gin.H{
+    })
+  })
+  v1 := r.Group("/v1")
+  {
+    process := v1.Group("/process")
     {
-        process := v1.Group("/process")
-        {
-            process.POST("/", processPattern)
-        }
+      process.POST("/", processPattern)
     }
-    r.Run(":5000")
+  }
+  r.Run(":5000")
 }
 
 func processPattern(c *gin.Context) {
-    var req RosieRequest
-    var messages C.struct_rosieL_stringArray
-    var rosie_string C.struct_rosieL_stringArray
-    //var engine unsafe.Pointer
-    if c.Bind(&req) == nil {
-        home := gostring_to_structStringptr(os.Getenv("ROSIE_HOME"))
-        engine, err := C.rosieL_initialize(home, &messages)
-        if engine == nil {
-            c.JSON(http.StatusInternalServerError, gin.H{"error_message": "Could not create Rosie engine."})
-            C.rosieL_free_stringArray(rosie_string)
-            C.rosieL_free_stringArray(messages)
-            C.rosieL_finalize(engine);
-            return
-        }
-
-        manifest := gostring_to_structStringptr(os.Getenv("ROSIE_HOME") + "/MANIFEST")
-        res, err := C.rosieL_load_manifest(engine, manifest)
-        log.Print("Load Manifest return: " + structString_to_GoString(*C.string_array_ref(res, 0)))
-        if err != nil {
-            c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
-            C.rosieL_free_stringArray(rosie_string)
-            C.rosieL_free_stringArray(messages)
-            C.rosieL_finalize(engine);
-            return
-        }
-
-        config := gostring_to_structStringptr("{\"expression\":\"" + req.Pattern + "\", \"encode\":\"json\"}")
-        rosie_string, err = C.rosieL_configure_engine(engine, config)
-        if err != nil {
-            c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
-            C.rosieL_free_stringArray(rosie_string)
-            C.rosieL_free_stringArray(messages)
-            C.rosieL_finalize(engine);
-            return
-        }
-        retval := structString_to_GoString(*C.string_array_ref(rosie_string, 0))
-        log.Print("Configure Engine return: " + retval)
-        rosie_string, err = C.rosieL_inspect_engine(engine)
-        retval = structString_to_GoString(*C.string_array_ref(rosie_string, 0))
-        engine_config := structString_to_GoString(*C.string_array_ref(rosie_string, 1))
-        log.Print("Inspect Engine return: " + engine_config)
-
-
-        var code, js_str string
-        var leftover int
-
-        req_string := C.new_string_ptr(C.int(len(req.Text)), C.CString(req.Text))
-
-
-        rosie_string, err = C.rosieL_match(engine, req_string, nil)
-        if err != nil {
-            c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
-            C.rosieL_free_stringArray(rosie_string)
-            C.rosieL_free_stringArray(messages)
-            C.rosieL_finalize(engine);
-            return
-        }
-
-        code = structString_to_GoString(*C.string_array_ref(rosie_string, 0))
-        js_str = structString_to_GoString(*C.string_array_ref(rosie_string, 1))
-        leftover, err = strconv.Atoi(structString_to_GoString(*C.string_array_ref(rosie_string, 2)))
-        if code != "true" {
-            c.JSON(http.StatusOK, gin.H{"error": js_str})
-            C.rosieL_free_stringArray(rosie_string)
-            C.rosieL_free_stringArray(messages)
-            C.rosieL_finalize(engine);
-            return
-        } else {
-            var retvals map[string]map[string]interface{}
-            err = json.Unmarshal([]byte(js_str), &retvals)
-            if err != nil {
-                c.JSON(http.StatusOK, gin.H{"error": err})
-                C.rosieL_free_stringArray(rosie_string)
-                C.rosieL_free_stringArray(messages)
-                C.rosieL_finalize(engine);
-                return
-            }
-           var subs string
-            if retvals["*"]["subs"] != nil {
-                subs = retvals["*"]["subs"].(string)
-            } else {
-                subs = ""
-            }
-
-            c.JSON(http.StatusOK, gin.H{
-                "code": code,
-                "js_str": js_str,
-                "leftover": leftover,
-                "retvals": retvals,
-                "text": retvals["*"]["text"],
-                //"pos": int(retvals["*"]["pos"].(float64)),
-                "subs": subs,
-            })
-        }
-    } else {
-        c.JSON(http.StatusBadRequest, nil)
+  var req RosieRequest
+  var messages C.struct_rosieL_stringArray
+  var rosie_string C.struct_rosieL_stringArray
+  //var engine unsafe.Pointer
+  if c.Bind(&req) == nil {
+    home := gostring_to_structStringptr(os.Getenv("ROSIE_HOME"))
+    engine, err := C.rosieL_initialize(home, &messages)
+    if engine == nil {
+      c.JSON(http.StatusInternalServerError, gin.H{"error_message": "Could not create Rosie engine."})
+      C.rosieL_free_stringArray(rosie_string)
+      C.rosieL_free_stringArray(messages)
+      C.rosieL_finalize(engine);
+      return
     }
-    C.rosieL_free_stringArray(rosie_string)
-    C.rosieL_free_stringArray(messages)
-    //C.rosieL_finalize(engine);
+
+    manifest := gostring_to_structStringptr(os.Getenv("ROSIE_HOME") + "/MANIFEST")
+    res, err := C.rosieL_load_manifest(engine, manifest)
+    log.Print("Load Manifest return: " + structString_to_GoString(*C.string_array_ref(res, 0)))
+    if err != nil {
+      c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
+      C.rosieL_free_stringArray(rosie_string)
+      C.rosieL_free_stringArray(messages)
+      C.rosieL_finalize(engine);
+      return
+    }
+
+    config := gostring_to_structStringptr("{\"expression\":\"" + req.Pattern + "\", \"encode\":\"json\"}")
+    rosie_string, err = C.rosieL_configure_engine(engine, config)
+    if err != nil {
+      c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
+      C.rosieL_free_stringArray(rosie_string)
+      C.rosieL_free_stringArray(messages)
+      C.rosieL_finalize(engine);
+      return
+    }
+    retval := structString_to_GoString(*C.string_array_ref(rosie_string, 0))
+    log.Print("Configure Engine return: " + retval)
+    rosie_string, err = C.rosieL_inspect_engine(engine)
+    retval = structString_to_GoString(*C.string_array_ref(rosie_string, 0))
+    engine_config := structString_to_GoString(*C.string_array_ref(rosie_string, 1))
+    log.Print("Inspect Engine return: " + engine_config)
+
+
+    var code, js_str string
+
+    req_string := C.new_string_ptr(C.int(len(req.Text)), C.CString(req.Text))
+
+
+    rosie_string, err = C.rosieL_match(engine, req_string, nil)
+    if err != nil {
+      c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
+      C.rosieL_free_stringArray(rosie_string)
+      C.rosieL_free_stringArray(messages)
+      C.rosieL_finalize(engine);
+      return
+    }
+
+    code = structString_to_GoString(*C.string_array_ref(rosie_string, 0))
+    js_str = structString_to_GoString(*C.string_array_ref(rosie_string, 1))
+    if code != "true" {
+      c.JSON(http.StatusOK, gin.H{"error_1": js_str})
+      C.rosieL_free_stringArray(rosie_string)
+      C.rosieL_free_stringArray(messages)
+      C.rosieL_finalize(engine);
+      return
+    } else {
+      var retvals map[string]map[string]interface{}
+      err = json.Unmarshal([]byte(js_str), &retvals)
+      if err != nil {
+        c.JSON(http.StatusOK, gin.H{"error_2": err})
+        C.rosieL_free_stringArray(rosie_string)
+        C.rosieL_free_stringArray(messages)
+        C.rosieL_finalize(engine);
+        return
+      }
+
+      c.JSON(http.StatusOK, gin.H{
+        "result": retvals,
+      })
+    }
+  } else {
+    c.JSON(http.StatusBadRequest, nil)
+  }
+  C.rosieL_free_stringArray(rosie_string)
+  C.rosieL_free_stringArray(messages)
+  //C.rosieL_finalize(engine);
 }
