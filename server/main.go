@@ -30,6 +30,8 @@ import (
     "net/http"
     "log"
 
+    "github.com/goamz/goamz/aws"
+    "github.com/goamz/goamz/dynamodb"
     "github.com/gin-gonic/gin"
 )
 
@@ -61,11 +63,51 @@ func CORSMiddleware() gin.HandlerFunc {
   }
 }
 
+func database_init() *dynamodb.Server {
+    os.Setenv("AWS_ACCESS_KEY_ID", "AKIAIS3WK52OO7HNM3MQ")
+    os.Setenv("AWS_SECRET_ACCESS_KEY", "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")
+
+    auth := aws_auth()
+    region := aws.USEast
+    ddbs := NewFrom(auth, region)
+
+    return ddbs
+}
+
+func NewFrom(auth aws.Auth, region aws.Region) *dynamodb.Server {
+    return &dynamodb.Server{auth, region}
+}
+
+func aws_auth() aws.Auth {
+    auth, err := aws.EnvAuth()
+    if err != nil {
+        log.Fatal(err.Error())
+    }
+
+    return auth
+}
+
 func main() {
 	rosie_home := os.Getenv("ROSIE_HOME")
 	if rosie_home == "" {
 		log.Fatal("Environment variable ROSIE_HOME is not set.  Must be set to root of rosie directory.\n")
 	}
+
+    //ddbs := database_init()
+
+    /*pk_attr := dynamodb.NewNumericAttribute("ID", "")
+    pk := dynamodb.PrimaryKey{pk_attr, nil}
+    user_action := dynamodb.NewStringAttribute("User Action", "")
+    system_action := dynamodb.NewStringAttribute("System Action", "")
+    pattern := dynamodb.NewStringAttribute("Pattern", "")
+    text := dynamodb.NewStringAttribute("Text", "")
+    table := dynamodb.Table{ddbs, "RiveterLogs", pk}
+
+    ok, err := table.PutItem("", "", []dynamodb.Attribute{*action})
+    fmt.Println(ok)
+    if err != nil {
+        log.Fatal(err.Error())
+    }*/
 
     r := gin.Default()
     r.Use(CORSMiddleware())

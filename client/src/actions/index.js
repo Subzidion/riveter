@@ -52,7 +52,7 @@ export function receiveError(json) {
 export function evaluateText(pattern, text) {
   return function(dispatch) {
     dispatch(requestData())
-    return axios.post('https://api.riveter.site/v1/process/', {
+    return axios.post('http://172.17.0.2:5000/v1/process/', {
       pattern: pattern,
       textContent: text
     })

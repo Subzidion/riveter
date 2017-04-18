@@ -16,8 +16,12 @@ ENV ROSIE_HOME /opt/rosie
 ENV ROSIE_LIB /opt/rosie/ffi/librosie
 
 RUN go get github.com/gin-gonic/gin
+RUN go get github.com/goamz/goamz/aws
+RUN go get github.com/goamz/goamz/dynamodb
 
 RUN git clone https://github.com/Subzidion/riveter.git $GOPATH/src/riveter/
+
+COPY main.go $GOPATH/src/riveter/server/main.go
 
 WORKDIR $GOPATH/src/riveter/client
 RUN mkdir -p $GOPATH/src/riveter/server/include && \
