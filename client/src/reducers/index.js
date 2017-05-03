@@ -13,7 +13,7 @@ export const initialState = {
   ],
   currentPattern: 'basic.matchall',
   currentText: '',
-  jsonOutput: 'test'
+  jsonOutput: ''
 }
 
 export default function RiveterReducer(state = initialState, action) {

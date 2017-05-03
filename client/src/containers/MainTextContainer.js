@@ -9,7 +9,8 @@ import * as styles from '../components/styles'
 const mapStateToProps = function(state) {
   return {
     currentPattern: state.currentPattern,
-    hasResult: state.hasResult
+    hasResult: state.hasResult,
+    result: state.jsonOutput
   }
 }
 
@@ -43,6 +44,7 @@ class MainTextContainer extends Component {
         <HighlightedText
           title="Test Text"
           text={ this.state.parseText }
+          response={ this.props.result }
         />
         </div>
       )

@@ -8,6 +8,10 @@ export const textAreaStyle = {
   width: '100%'
 }
 
+export const resultsStyle = {
+  width: '100%'
+}
+
 export const patternListStyle = {
   height: '25vh',
   overflowY: 'scroll',
