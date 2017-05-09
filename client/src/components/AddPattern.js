@@ -19,9 +19,8 @@ class AddPattern extends Component {
       <div>
         <Subheader style={styles.headingStyle}>Add Pattern</Subheader>
         <Paper style={styles.paperStyle} zDepth={2} rounded={true}>
-          <TextField ref="name" style={styles.inputStyle} hintText="Name" />
           <TextField ref="pattern" style={styles.inputStyle} hintText="Pattern" fullWidth={true} />
-          <RaisedButton label="Add Pattern" primary={true} style={styles.buttonStyle} onClick={ () => this.props.addPattern(this.refs.name.input.value, this.refs.pattern.input.value) } />
+          <RaisedButton label="Add Pattern" primary={true} style={styles.buttonStyle} onClick={ () => this.props.addPattern(this.refs.pattern.input.value) } />
         </Paper>
       </div>
     )
@@ -31,8 +30,8 @@ class AddPattern extends Component {
 export default connect(mapStateToProps,
   (dispatch) => {
     return {
-      addPattern: (name, pattern) => {
-        dispatch(addPattern(name, pattern))
+      addPattern: (pattern) => {
+        dispatch(addPattern(pattern))
       }
     }
   })(AddPattern)

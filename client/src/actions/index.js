@@ -1,10 +1,9 @@
 import * as types from './ActionTypes'
 import axios from 'axios'
 
-export function addPattern(name, pattern) {
+export function addPattern(pattern) {
   return {
     type: types.ADD_PATTERN,
-    name: name,
     pattern: pattern
   }
 }

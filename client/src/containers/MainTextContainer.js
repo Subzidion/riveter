@@ -18,7 +18,7 @@ class MainTextContainer extends Component {
   constructor() {
     super()
     this.state = {
-      parseText: ''
+      parseText: "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n0 1 2 3 4 5 6 7 8 9\n152.7.224.9\n69.89.31.226"
     }
   }
 
@@ -29,6 +29,7 @@ class MainTextContainer extends Component {
           <TextArea
             name="input"
             title="Test Text"
+            content={ this.state.parseText }
             onChange={ (event) => this.setState({ parseText: event.target.value }) }
           />
           <RaisedButton label="Parse Text"

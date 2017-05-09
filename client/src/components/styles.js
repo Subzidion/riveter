@@ -9,12 +9,13 @@ export const textAreaStyle = {
 }
 
 export const resultsStyle = {
+  maxHeight: 700,
   width: '100%'
 }
 
 export const patternListStyle = {
   height: '25vh',
-  overflowY: 'scroll',
+  overflowY: 'auto',
   margin: 5,
   textAlign: 'left'
 }

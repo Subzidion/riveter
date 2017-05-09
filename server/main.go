@@ -91,7 +91,7 @@ func processPattern(c *gin.Context) {
     home := gostring_to_structStringptr(os.Getenv("ROSIE_HOME"))
     engine, err := C.rosieL_initialize(home, &messages)
     if engine == nil {
-      c.JSON(http.StatusInternalServerError, gin.H{"error_message": "Could not create Rosie engine."})
+      c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not create Rosie engine."})
       C.rosieL_free_stringArray(rosie_string)
       C.rosieL_free_stringArray(messages)
       C.rosieL_finalize(engine);
@@ -102,7 +102,7 @@ func processPattern(c *gin.Context) {
     res, err := C.rosieL_load_manifest(engine, manifest)
     log.Print("Load Manifest return: " + structString_to_GoString(*C.string_array_ref(res, 0)))
     if err != nil {
-      c.JSON(http.StatusInternalServerError, gin.H{"error_message": err})
+      c.JSON(http.StatusInternalServerError, gin.H{"error": err})
       C.rosieL_free_stringArray(rosie_string)
       C.rosieL_free_stringArray(messages)
       C.rosieL_finalize(engine);
@@ -152,7 +152,7 @@ func processPattern(c *gin.Context) {
       var retvals map[string]map[string]interface{}
       err = json.Unmarshal([]byte(js_str), &retvals)
       if err != nil {
-        c.JSON(http.StatusOK, gin.H{"error_2": err})
+        c.JSON(http.StatusOK, gin.H{"error": "no match found."})
         C.rosieL_free_stringArray(rosie_string)
         C.rosieL_free_stringArray(messages)
         C.rosieL_finalize(engine);
