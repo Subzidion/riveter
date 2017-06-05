@@ -2,6 +2,8 @@
 
 Riveter is an interactive browser based experience for the [Rosie Pattern Language](https://github.com/jamiejennings/rosie-pattern-language).
 
+**Riveter is no longer deployed as of June 4th, 2017.**
+
 
 # Development
 
